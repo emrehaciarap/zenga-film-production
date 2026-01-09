@@ -1,0 +1,12 @@
+> 
+fetch('/api/trpc/auth.login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'admin@zenga.com', password: '13544425mibmiB-.' }),
+  credentials: 'include'
+})
+.then(r => r.json())
+.then(d => console.log(JSON.stringify(d, null, 2)))
+.catch(e => console.error(e))
+
+< undefined

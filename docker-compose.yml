@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: zenga-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_change_me
+      MYSQL_DATABASE: zenga
+      MYSQL_USER: zenga_user
+      MYSQL_PASSWORD: zenga_password_change_me
+    ports:
+      - "3306:3306"
+    volumes:
+      - zenga_db:/var/lib/mysql
+    networks:
+      - zenga_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  zenga:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zenga-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: mysql://zenga_user:zenga_password_change_me@mysql:3306/zenga
+      JWT_SECRET: your-secret-key-change-this-in-production
+      OAUTH_SERVER_URL: ${OAUTH_SERVER_URL:-}
+      VITE_OAUTH_PORTAL_URL: ${VITE_OAUTH_PORTAL_URL:-}
+      VITE_APP_ID: ${VITE_APP_ID:-}
+      OWNER_OPEN_ID: ${OWNER_OPEN_ID:-}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    networks:
+      - zenga_network
+    command: sh -c "pnpm db:push && pnpm start"
+
+volumes:
+  zenga_db:
+
+networks:
+  zenga_network:
+    driver: bridge
