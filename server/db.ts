@@ -503,9 +503,13 @@ export async function deletePartner(id: number) {
 }
 
 // ==================== CONTACT MESSAGES ====================
-export async function getContactMessages() {
+export async function getContactMessages(status?: string) {
   const db = await getDb();
   if (!db) return [];
+  
+  if (status) {
+    return db.select().from(contactMessages).where(eq(contactMessages.status, status as any)).orderBy(desc(contactMessages.createdAt));
+  }
   
   return db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
 }
@@ -536,9 +540,10 @@ export async function deleteContactMessage(id: number) {
 // ==================== CONTACT INFO ====================
 export async function getContactInfo() {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) return null;
   
-  return db.select().from(contactInfo).limit(1);
+  const result = await db.select().from(contactInfo).limit(1);
+  return result[0] || null;
 }
 
 export async function upsertContactInfo(data: InsertContactInfo) {

@@ -430,7 +430,7 @@ const contactRouter = router({
       status: z.enum(['unread', 'read', 'replied', 'archived']),
     }))
     .mutation(async ({ input }) => {
-      return db.updateContactMessageStatus(input.id, input.status);
+      return db.updateContactMessage(input.id, { status: input.status });
     }),
   
   deleteMessage: adminProcedure
