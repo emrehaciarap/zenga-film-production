@@ -168,35 +168,89 @@ export default function About() {
   const { data: achievements } = trpc.about.achievements.useQuery();
   const { data: partners } = trpc.about.partners.useQuery();
 
-  // Get content by section
-  const getContent = (section: string) => {
-    return aboutContent?.find((c: any) => c.section === section);
-  };
+  // Zenga Yapım hikayesi
+  const zengaStory = `Zenga Yapım, sinema ve edebiyatın gücünü aynı potada eritmek amacıyla 2023 yılında yönetmen Mahmut Fazıl Coşkun ve yazar Selahattin Yusuf tarafından kuruldu. İki sanatçının ortak vizyonuyla şekillenen ajansımız, kuruluşundan bu yana nitelikli ve derinliği olan içeriklerle sektöre imzasını atmaktadır.
 
-  const vision = getContent("vision");
-  const mission = getContent("mission");
-  const story = getContent("story");
+Kısa sürede büyük projelere imza atan Zenga Yapım; T.C. Kültür ve Turizm Bakanlığı bünyesinde 5 farklı şehirde kültür festivallerinin organizasyonunu üstlenmiş, Tarih TV için hazırladığı 110 bölümlük kapsamlı belgesel serisiyle kolektif hafızaya değerli bir katkı sunmuştur. 2025 yılında Diyanet TV için hazırlanan 60 bölümlük "Mecelle Medeniyeti" belgeseliyle köklü mirasımızı ekranlara taşımaya devam etmiştir.
 
-  // Default content if not set
-  const defaultStory = `2015'ten beri Türk sinema ve reklam sektöründe öncü çalışmalara imza atan Zenga, yaratıcı vizyonu ve teknik mükemmeliyeti bir araya getiriyor. Her projemizde hikaye anlatımının gücüne inanıyor, izleyicilerimize unutulmaz deneyimler sunmayı hedefliyoruz.`;
+Zenga Yapım bugün, Selahattin Yusuf'un kaleme aldığı "Eve Dönemezsin" romanını TRT Tabii platformu için diziye uyarlayarak iddialı yapımlarına bir yenisini eklemeye hazırlanmaktadır. Estetiği, anlatıyı ve kültürel derinliği odağına alan firmamız, Türkiye'nin görsel ve kültürel hafızasında iz bırakmaya devam ediyor.`;
 
-  const defaultValues = [
-    { id: 1, title: "Yaratıcılık", description: "Her projede yenilikçi ve özgün çözümler üretiyoruz.", icon: "lightbulb" },
-    { id: 2, title: "Mükemmellik", description: "En yüksek kalite standartlarını hedefliyoruz.", icon: "star" },
-    { id: 3, title: "İşbirliği", description: "Ekip çalışması ve ortak başarıya inanıyoruz.", icon: "users" },
-    { id: 4, title: "Tutku", description: "Sinema sanatına olan tutkumuz bizi yönlendiriyor.", icon: "heart" },
+  // Zenga değerleri
+  const zengaValues = [
+    { 
+      id: 1, 
+      title: "Sanatsal Mükemmellik", 
+      description: "Sinemanın estetiğini edebiyatın derinliğiyle buluşturarak, her projede sanatsal mükemmelliği hedefliyoruz.", 
+      icon: "star" 
+    },
+    { 
+      id: 2, 
+      title: "Kültürel Derinlik", 
+      description: "Kültürel mirastan dijital platformlara, anlatılmaya değer hikayelerin peşinden gidiyoruz.", 
+      icon: "lightbulb" 
+    },
+    { 
+      id: 3, 
+      title: "Ödüllü Vizyon", 
+      description: "Ödüllü yönetmen ve yazarların ortak vizyonuyla, Türkiye'nin görsel hafızasına nitelikli imzalar atıyoruz.", 
+      icon: "award" 
+    },
+    { 
+      id: 4, 
+      title: "İşbirliği", 
+      description: "Ekip çalışması ve ortak başarıya inanıyor, her projede güçlü bir ekip ruhuyla hareket ediyoruz.", 
+      icon: "users" 
+    },
   ];
 
-  const defaultAchievements = [
-    { id: 1, year: 2015, title: "Zenga Kuruldu", description: "İstanbul'da küçük bir stüdyo olarak yolculuğumuza başladık.", type: "milestone" },
-    { id: 2, year: 2017, title: "İlk Ödülümüz", description: "Kısa film kategorisinde ulusal ödül.", type: "award" },
-    { id: 3, year: 2019, title: "Uluslararası Tanınırlık", description: "Cannes Film Festivali'nde gösterim.", type: "award" },
-    { id: 4, year: 2021, title: "Yeni Stüdyo", description: "Modern prodüksiyon tesisimize taşındık.", type: "milestone" },
-    { id: 5, year: 2023, title: "50+ Proje", description: "50'den fazla başarılı projeyi tamamladık.", type: "milestone" },
+  // Zenga başarıları
+  const zengaAchievements = [
+    { 
+      id: 1, 
+      year: 2023, 
+      title: "Zenga Yapım Kuruldu", 
+      description: "Mahmut Fazıl Coşkun ve Selahattin Yusuf'un ortak vizyonuyla İstanbul'da kuruldu.", 
+      type: "milestone" 
+    },
+    { 
+      id: 2, 
+      year: 2023, 
+      title: "Kültür Festivalleri", 
+      description: "T.C. Kültür ve Turizm Bakanlığı bünyesinde 5 farklı şehirde kültür festivallerinin organizasyonunu üstlendi.", 
+      type: "milestone" 
+    },
+    { 
+      id: 3, 
+      year: 2023, 
+      title: "Necip Fazıl Roman Ödülü", 
+      description: "Selahattin Yusuf, Necip Fazıl Roman Ödülü'nü Cumhurbaşkanı Recep Tayyip Erdoğan'ın elinden aldı.", 
+      type: "award" 
+    },
+    { 
+      id: 4, 
+      year: 2024, 
+      title: "Kuş Bakışı Türkiye", 
+      description: "Tarih TV için 110 bölümlük kapsamlı belgesel serisi tamamlandı.", 
+      type: "milestone" 
+    },
+    { 
+      id: 5, 
+      year: 2025, 
+      title: "Mecelle Medeniyeti", 
+      description: "Diyanet TV için 60 bölümlük belgesel serisi yayınlandı.", 
+      type: "milestone" 
+    },
+    { 
+      id: 6, 
+      year: 2025, 
+      title: "Eve Dönemezsin Dizisi", 
+      description: "TRT Tabii platformu için Selahattin Yusuf'un romanından dizi uyarlaması başladı.", 
+      type: "milestone" 
+    },
   ];
 
-  const displayValues = values && values.length > 0 ? values : defaultValues;
-  const displayAchievements = achievements && achievements.length > 0 ? achievements : defaultAchievements;
+  const displayValues = values && values.length > 0 ? values : zengaValues;
+  const displayAchievements = achievements && achievements.length > 0 ? achievements : zengaAchievements;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -210,7 +264,7 @@ export default function About() {
               Hakkımızda
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl">
-              Zenga Film Prodüksiyon'un hikayesi, vizyonu ve değerleri.
+              Zenga Yapım'ın hikayesi, vizyonu ve değerleri.
             </p>
           </div>
         </section>
@@ -224,24 +278,18 @@ export default function About() {
                   Hikayemiz
                 </span>
                 <h2 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight">
-                  {story?.title || "Sinema Tutkusuyla Başladı"}
+                  Sinema ve Edebiyatın Buluşması
                 </h2>
-                <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-                  {story?.content || defaultStory}
-                </p>
+                <div className="mt-6 text-lg text-muted-foreground leading-relaxed space-y-4">
+                  {zengaStory.split('\n\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
               <div className="relative aspect-video lg:aspect-square bg-secondary overflow-hidden">
-                {story?.image ? (
-                  <img
-                    src={story.image}
-                    alt="Zenga Hikayesi"
-                    className="w-full h-full object-cover grayscale"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-6xl font-bold text-muted-foreground/20">Z</span>
-                  </div>
-                )}
+                <div className="w-full h-full flex items-center justify-center">
+                  <span className="text-6xl font-bold text-muted-foreground/20">ZENGA</span>
+                </div>
               </div>
             </div>
           </div>
@@ -260,11 +308,10 @@ export default function About() {
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold">
-                  {vision?.title || "Türk Sinemasının Geleceğini Şekillendirmek"}
+                  Türkiye'nin Görsel Hafızasına İz Bırakmak
                 </h3>
                 <p className="mt-4 text-background/70 leading-relaxed">
-                  {vision?.content ||
-                    "Dünya standartlarında prodüksiyonlar üreterek Türk sinema ve reklam sektörünü uluslararası arenada temsil etmek."}
+                  Estetiği, anlatıyı ve kültürel derinliği odağına alan yapımlarımızla, Türkiye'nin görsel ve kültürel hafızasında kalıcı izler bırakmak. Yarının klasiklerini bugünden inşa etmek.
                 </p>
               </div>
 
@@ -277,11 +324,10 @@ export default function About() {
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold">
-                  {mission?.title || "Hikayeleri Hayata Geçirmek"}
+                  Nitelikli İçerikler Üretmek
                 </h3>
                 <p className="mt-4 text-background/70 leading-relaxed">
-                  {mission?.content ||
-                    "Her projede yaratıcılık, teknik mükemmeliyet ve profesyonelliği bir araya getirerek unutulmaz içerikler üretmek."}
+                  Sinema ve edebiyatın gücünü aynı potada eriterek, anlatılmaya değer hikayeleri ekrana taşımak. Her projede sanatsal mükemmellik ve kültürel derinlik sunmak.
                 </p>
               </div>
             </div>
@@ -316,7 +362,7 @@ export default function About() {
                 Yolculuğumuz
               </span>
               <h2 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight">
-                Başarılar & Ödüller
+                Başarılar & Kilometre Taşları
               </h2>
             </div>
 

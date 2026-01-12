@@ -101,6 +101,22 @@ function ProjectCard({ project }: { project: any }) {
 export default function Home() {
   const { data: featuredProjects } = trpc.projects.featured.useQuery();
   const { data: allProjects } = trpc.projects.list.useQuery({ status: "active" });
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Hero slider metinleri
+  const heroSlides = [
+    "Sinemanın estetiğini edebiyatın derinliğiyle buluşturuyor, anlatılmaya değer hikayelerin peşinden gidiyoruz.",
+    "Kültürel mirastan dijital platformlara, yarının klasiklerini inşa etmek için üretiyoruz.",
+    "Ödüllü yönetmen ve yazarların ortak vizyonuyla, Türkiye'nin görsel hafızasına nitelikli imzalar atıyoruz."
+  ];
+
+  // Auto-slide effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Stats with counter animation
   const projectCount = useCountUp(allProjects?.length || 50, 2000);
@@ -124,7 +140,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Hero Section with Slider */}
       <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
@@ -142,9 +158,30 @@ export default function Home() {
             <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter">
               ZENGA
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-              Sinema Sanatında Mükemmellik
-            </p>
+            
+            {/* Slider Text */}
+            <div className="mt-6 min-h-[120px] flex items-center justify-center">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4 transition-opacity duration-500">
+                {heroSlides[currentSlide]}
+              </p>
+            </div>
+
+            {/* Slider Dots */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentSlide 
+                      ? 'bg-foreground w-8' 
+                      : 'bg-foreground/30 hover:bg-foreground/50'
+                  }`}
+                  aria-label={`Slide ${index + 1}`}
+                />
+              ))}
+            </div>
+
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="min-w-[200px]">
                 <Link href="/projelerimiz">
